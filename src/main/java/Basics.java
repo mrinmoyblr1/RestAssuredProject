@@ -1,6 +1,9 @@
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.*;
 //We need to import this one manually. given() belong to this static package
+import static org.hamcrest.Matchers.*;
+//We need to import this package manually. equalTo("APP") is belong to this static package
+
 
 public class Basics {
 
@@ -29,8 +32,10 @@ public class Basics {
 				"    \"website\": \"https://rahulshettyacademy.com\",\r\n" + 
 				"    \"language\": \"French-IN\"\r\n" + 
 				"}").when().post("maps/api/place/add/json")
-		.then().log().all().assertThat().statusCode(200);
+		.then().log().all().assertThat().statusCode(200).body("scope", equalTo("APP"))
+		.header("Server", "Apache/2.4.18 (Ubuntu)");
 		
+	
 		
 		
 		
