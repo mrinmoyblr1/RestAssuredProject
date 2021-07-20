@@ -1,11 +1,12 @@
 import io.restassured.RestAssured;
+//We need to import below two static packages manually. given() belong to this static package
 import static io.restassured.RestAssured.*;
-//We need to import this one manually. given() belong to this static package
 import static org.hamcrest.Matchers.*;
 import org.testng.Assert;
 import files.ReusableMethods;
 //We need to import this package manually. equalTo("APP") is belong to this static package
 import files.payLoad;
+
 public class Basics {
 	public static void main(String[] args) {
 		// Validate if the Add Place API is working fine
