@@ -1,3 +1,4 @@
+package restAssured;
 import io.restassured.RestAssured;
 //We need to import below two static packages manually. given() belong to this static package
 import static io.restassured.RestAssured.*;
@@ -7,7 +8,7 @@ import files.ReusableMethods;
 //We need to import this package manually. equalTo("APP") is belong to this static package
 import files.payLoad;
 
-public class Basics {
+public class Basics_BK {
 	public static void main(String[] args) {
 		// Validate if the Add Place API is working fine
 		// Rest Assured will work on the below mentioned 3 principals

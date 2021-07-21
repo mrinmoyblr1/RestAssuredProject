@@ -21,9 +21,9 @@ public class payLoad {
 				+ "}\r\n" + "";
 	}
 
-	public static String AddBook() {
+	public static String AddBook(String isbn, String aisle) {
 		String PayLoad = "{\r\n" + "    \"name\": \"Learn Appium Automation with Java Second Edition\",\r\n"
-				+ "    \"isbn\": \"NEW003\",\r\n" + "    \"aisle\": \"9998\",\r\n"
+				+ "    \"isbn\": \""+isbn+"\",\r\n" + "    \"aisle\": \""+aisle+"\",\r\n"
 				+ "    \"author\": \"John foe Down\"\r\n" + "}";
 
 		return PayLoad;

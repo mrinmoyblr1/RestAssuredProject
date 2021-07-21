@@ -1,3 +1,4 @@
+package restAssured;
 import org.testng.Assert;
 import files.payLoad;
 import io.restassured.path.json.JsonPath;
