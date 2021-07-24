@@ -42,6 +42,7 @@ public class oAuthTest {
 				.queryParam("redirect_uri", "https://rahulshettyacademy.com/getCourse.php")
 				.queryParam("grant_type", "authorization_code").when().log().all()
 				.post("https://www.googleapis.com/oauth2/v4/token").asString();
+		
 		JsonPath js = new JsonPath(accessTokenResponse);
 		String accesToken = js.getString("access_token");
 
