@@ -18,6 +18,24 @@ public class oAuthTest {
 		String response = given().queryParam("access_token", accesToken).when().log().all()
 				.get("https://rahulshettyacademy.com/getCourse.php").asString();
 		System.out.println(response);
-		JsonPath js = new JsonPath(response);
+		JsonPath js1 = new JsonPath(response);
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
