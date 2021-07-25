@@ -1,18 +1,27 @@
 package restAssured;
-
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
-
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.By.ByCssSelector;
 import org.openqa.selenium.chrome.ChromeDriver;
-
+import org.testng.Assert;
+import io.restassured.parsing.Parser;
 import io.restassured.path.json.JsonPath;
-
+import pojo.Api;
+import pojo.GetCourses;
+import pojo.WebAutomation;
 public class oAuthTest {
-	public static void main(String[] args) throws InterruptedException {
-
+	public static void main(String[] args) throws InterruptedException, IOException {
+		String[] coursesTitles = { "Selenium Webdriver Java", "Cypress", "Protractor" };
 //		System.setProperty("webdriver.chrome.driver", "C:\\Users\\Mrinmoy\\Selenium_Driver\\chromedriver.exe");
 //		WebDriver driver = new ChromeDriver();
 //		driver.manage().window().maximize();
@@ -25,14 +34,19 @@ public class oAuthTest {
 //		driver.findElement(By.cssSelector("input[type='password']")).sendKeys("mrinmoy.blr10@gmail.com");
 //		Thread.sleep(5000);
 		// String url = driver.getCurrentUrl();
-		String url = "https://rahulshettyacademy.com/getCourse.php?state=mkbmkbmkb&code=4%2F0AX4XfWj8Ra6lmK3GP9VwyecVblihD4aFb7fLnFbuQal0Z"
-				+ "r2H04d1didmvxQaITDfNRrr0g&scope=email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid&authuser=0&prompt"
-				+ "=none";
-
+		File file = new File(
+				"C:\\Users\\Mrinmoy\\eclipse-workspace-2\\RestAssuredProject\\src\\main\\java\\files\\OAuth.properties");
+		FileInputStream fis = new FileInputStream(file);
+		Properties p = new Properties();
+		p.load(fis);
+		// String url =
+		// "https://rahulshettyacademy.com/getCourse.php?state=mkbmkbmkb&code=4%2F0AX4XfWiFlokLWNc8IrkvCDFcOo-wszRRWw_3icIFxo7WyAYQyMr3_TBcJoQdEnOAtv2AZg&scope=email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid&authuser=0&prompt=none";
+		String url = p.getProperty("url");
 		String partialCode = url.split("code=")[1];
 		String code = partialCode.split("&scope")[0];
 		System.out.println(code);
-
+		
+		
 		// To get access_token
 		String accessTokenResponse = given().urlEncodingEnabled(false).queryParam("code", code)
 				// This .urlEncodingEnabled(false) will not allow to change the string even
@@ -42,15 +56,39 @@ public class oAuthTest {
 				.queryParam("redirect_uri", "https://rahulshettyacademy.com/getCourse.php")
 				.queryParam("grant_type", "authorization_code").when().log().all()
 				.post("https://www.googleapis.com/oauth2/v4/token").asString();
-		
 		JsonPath js = new JsonPath(accessTokenResponse);
 		String accesToken = js.getString("access_token");
-
+		
+		
 		// To get the response from rahulshettyacademy.com
-		String response = given().queryParam("access_token", accesToken).when().log().all()
-				.get("https://rahulshettyacademy.com/getCourse.php").asString();
-		System.out.println(response);
-		JsonPath js1 = new JsonPath(response);
-
+		GetCourses gc = given().queryParam("access_token", accesToken).expect().defaultParser(Parser.JSON).when()
+				// Here we have to mentioned what type of format of the response will be
+				// provided. is it JSON or XML?
+				// This .expect().defaultParser(Parser.JSON) will perform this task
+				.get("https://rahulshettyacademy.com/getCourse.php").as(GetCourses.class);
+		
+		
+		// Here we need to provide the .as(GetCourses.class). This is the POJO class.
+		System.out.println(gc.getLinkedIn());
+		System.out.println(gc.getInstructor());
+		System.out.println("The getCourseTitle:  ");
+		System.out.println(gc.getCourses().getApi().get(1).getCourseTitle());
+		List<Api> apiCourses = gc.getCourses().getApi();
+		for (int i = 0; i < apiCourses.size(); i++) {
+			if (apiCourses.get(i).getCourseTitle().equalsIgnoreCase("SoapUI Webservices testing")) {
+				System.out.println(apiCourses.get(i).getPrice());
+			}
+		}
+		ArrayList<String> list = new ArrayList<String>();
+		List<WebAutomation> webAutomationCourses = gc.getCourses().getWebAutomation();
+		for (int i = 0; i < webAutomationCourses.size(); i++) {
+			list.add(webAutomationCourses.get(i).getCourseTitle());
+		}
+		
+		
+		// To convert Array to ArrayList
+		List<String> expectedList=Arrays.asList(coursesTitles);
+		Assert.assertEquals(expectedList, list);
+		Assert.assertTrue(list.equals(expectedList));
 	}
 }
