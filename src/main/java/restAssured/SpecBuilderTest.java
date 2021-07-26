@@ -42,5 +42,6 @@ public class SpecBuilderTest {
 				.then().spec(resSpec).extract().response();
 		String responseString = response.asString();
 		System.out.println(responseString);
+		System.out.println("This is Test 123");
 	}
 }
