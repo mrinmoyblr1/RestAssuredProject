@@ -34,9 +34,8 @@ public class oAuthTest {
 //		driver.findElement(By.cssSelector("input[type='password']")).sendKeys("mrinmoy.blr10@gmail.com");
 //		Thread.sleep(5000);
 		// String url = driver.getCurrentUrl();
-		File file = new File(
-				"C:\\Users\\Mrinmoy\\eclipse-workspace-2\\RestAssuredProject\\src\\main\\java\\files\\OAuth.properties");
-		FileInputStream fis = new FileInputStream(file);
+
+		FileInputStream fis = new FileInputStream("C:\\Users\\Mrinmoy\\eclipse-workspace-2\\RestAssuredProject\\src\\main\\java\\files\\OAuth.properties");
 		Properties p = new Properties();
 		p.load(fis);
 		// String url =
