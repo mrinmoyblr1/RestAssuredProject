@@ -36,12 +36,12 @@ public class SpecBuilderTest {
 		
 		ResponseSpecification resSpec=new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
 		
-		RequestSpecification res = given().spec(req).body(p);
+		RequestSpecification res = given().spec(req).body(p).log().all();
 		
 		Response response = res.when().post("/maps/api/place/add/json")
 				.then().spec(resSpec).extract().response();
 		String responseString = response.asString();
 		System.out.println(responseString);
-		System.out.println("This is Test 123");
+		
 	}
 }
