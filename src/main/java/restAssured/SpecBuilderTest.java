@@ -1,5 +1,4 @@
 package restAssured;
-import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
@@ -9,7 +8,6 @@ import io.restassured.specification.ResponseSpecification;
 import pojo.AddPlace;
 import pojo.Location;
 import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.*;
 import java.util.ArrayList;
 import java.util.List;
 public class SpecBuilderTest {
@@ -36,12 +34,11 @@ public class SpecBuilderTest {
 		
 		ResponseSpecification resSpec=new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
 		
-		RequestSpecification res = given().spec(req).body(p).log().all();
+		RequestSpecification res = given().spec(req).body(p);
 		
-		Response response = res.when().post("/maps/api/place/add/json")
-				.then().spec(resSpec).extract().response();
+		Response response = res.when().post("/maps/api/place/add/json").then().spec(resSpec).extract().response();
+		
 		String responseString = response.asString();
-		System.out.println(responseString);
-		
+		System.out.println(responseString);		
 	}
 }
