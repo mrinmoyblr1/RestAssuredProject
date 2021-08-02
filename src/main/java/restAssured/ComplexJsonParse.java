@@ -32,7 +32,6 @@ public class ComplexJsonParse {
 		}
 
 		// Print no of copies sold by RPA Course
-
 		for (int i = 0; i < count; i++) {
 			courseName = js.getString("courses[" + i + "].title");
 			if (courseName.contentEquals("RPA")) {
@@ -40,7 +39,6 @@ public class ComplexJsonParse {
 				System.out.println(js.getInt("courses[" + i + "].copies"));
 				break;
 			}
-
 		}
 		// Verify if Sum of all Course prices matches with Purchase Amount
 		int totalPrice = 0;

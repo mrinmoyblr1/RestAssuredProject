@@ -35,7 +35,7 @@ public class oAuthTest {
 //		Thread.sleep(5000);
 		// String url = driver.getCurrentUrl();
 
-		FileInputStream fis = new FileInputStream("C:\\Users\\Mrinmoy\\eclipse-workspace-2\\RestAssuredProject\\src\\main\\java\\files\\OAuth.properties");
+		FileInputStream fis = new FileInputStream("/Users/Mrinmoy/Documents/Study_Materials/RestAssuredProject/src/main/java/files/OAuth.properties");
 		Properties p = new Properties();
 		p.load(fis);
 		// String url =
