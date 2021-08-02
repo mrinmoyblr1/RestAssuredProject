@@ -24,7 +24,7 @@ public class Basics {
 		RestAssured.baseURI = "https://rahulshettyacademy.com";
 		String response = given().log().all().queryParam("key", "qaclick123").header("Content-Type", "application/json")
 				.body(new String(Files.readAllBytes(Paths.get(
-						"/Users/Mrinmoy/Documents/Study_Materials/RestAssuredProject/src/main/java/files/AddPlace.json"))))
+						"C:\\Users\\Mrinmoy\\eclipse-workspace-2\\RestAssuredProject\\src\\main\\java\\files\\AddPlace.json"))))
 				// Getting the input Payload from external JSON file(AddPlace.json).
 
 				.when().post("maps/api/place/add/json").then().assertThat().statusCode(200).log().all()

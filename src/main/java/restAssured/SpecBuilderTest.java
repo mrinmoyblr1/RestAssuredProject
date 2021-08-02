@@ -1,5 +1,5 @@
 package restAssured;
-import io.restassured.RestAssured;
+
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
@@ -12,9 +12,10 @@ import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 import java.util.ArrayList;
 import java.util.List;
+
 public class SpecBuilderTest {
 	public static void main(String[] args) {
-		//RestAssured.baseURI = "https://rahulshettyacademy.com";
+		// RestAssured.baseURI = "https://rahulshettyacademy.com";
 		AddPlace p = new AddPlace();
 		Location l = new Location();
 		p.setAccuracy(50);
@@ -31,15 +32,20 @@ public class SpecBuilderTest {
 		l.setLng(33.427362);
 		p.setLocation(l);
 		
+		
 		RequestSpecification req = new RequestSpecBuilder().setBaseUri("https://rahulshettyacademy.com")
 				.addQueryParam("Key", "qaclick123").setContentType(ContentType.JSON).build();
 		
-		ResponseSpecification resSpec=new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
 		
-		RequestSpecification res = given().spec(req).body(p);
+		ResponseSpecification resSpec = new ResponseSpecBuilder().expectStatusCode(200)
+				.expectContentType(ContentType.JSON).build();
 		
-		Response response = res.when().post("/maps/api/place/add/json")
-				.then().spec(resSpec).extract().response();
+		
+
+		RequestSpecification res = given().spec(req).body(p).log().all();
+
+		Response response = res.when().post("/maps/api/place/add/json").then().spec(resSpec).log().all().extract().response();
+
 		String responseString = response.asString();
 		System.out.println(responseString);
 	}
